@@ -16,6 +16,7 @@ import com.github.gurapomu.mcltSponge.Commands.EnterPIN;
 import com.github.gurapomu.mcltSponge.Commands.Post;
 import com.github.gurapomu.mcltSponge.Commands.TwitterOAuth;
 import com.github.gurapomu.mcltSponge.eventListener.PlayerJoinEventListener;
+import com.github.gurapomu.mcltSponge.twitter.Authorization;
 import com.google.inject.Inject;
 
 import org.slf4j.Logger;
@@ -69,18 +70,18 @@ public class MCLTSponge {
 		game.getCommandDispatcher().register(this, enterPIN, "enterpin");
 		game.getCommandDispatcher().register(this, post, "post");
 		game.getEventManager().registerListener(this, ClientConnectionEvent.Join.class, playerJoinEventListener);
-//		if(Authorization.loadAccessToken() != null){
-//			Authorization.tweetString("The server started. (Auth by @" + Authorization.loadAccessToken().getScreenName() + ")");
-//		} else{
-//			logger.info("It is not yet authenticated for Twitter.");
-//			logger.info("Please enter command (/oauth /enterpin [pin])");
-//		}
+		if(Authorization.loadAccessToken() != null){
+			Authorization.tweetString("The server started. (Auth by @" + Authorization.loadAccessToken().getScreenName() + ")");
+		} else{
+			logger.info("It is not yet authenticated for Twitter.");
+			logger.info("Please enter command (/oauth /enterpin [pin])");
+		}
 	}
 	
 	@Listener
 	public void onServerStop(GameStoppedServerEvent event){
-//		if(Authorization.loadAccessToken() != null){
-//			Authorization.tweetString("The server stopped.");
-//		}
+		if(Authorization.loadAccessToken() != null){
+			Authorization.tweetString("The server stopped.");
+		}
 	}
 }
